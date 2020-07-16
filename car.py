@@ -4,14 +4,14 @@ import time
 
 class Car():
         def __init__(self, left_in1, left_in2, left_ena, right_in3, right_in4, right_enb, low_electrical_level, hight_electrical_level):
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)  //禁用运行警告(RuntimeWarning)
+        GPIO.setmode(GPIO.BOARD) //设置引脚编号规则为BOARD
         
         self.left_in1 = left_in1
         self.left_in2 = left_in2
         self.left_ena = left_ena
         if self.left_ena > 0:
-            GPIO.setup(self.left_ena, GPIO.OUT)
+            GPIO.setup(self.left_ena, GPIO.OUT) //将left_ena号引脚设置成输出模式
         
         GPIO.setup(self.left_in1, GPIO.OUT)
         GPIO.setup(self.left_in2, GPIO.OUT)
@@ -30,18 +30,18 @@ class Car():
         self.low_electrical_level = low_electrical_level
 
     '''
-        右边轮子前进
-        '''
+    右边轮子前进
+    '''
     def rFoward(self):
-        GPIO.output(self.right_in3, self.hight_electrical_level)
-        GPIO.output(self.right_in4, self.low_electrical_level)
+        GPIO.output(self.right_in3, self.hight_electrical_level) //将引脚的状态设置为高电平，1开
+        GPIO.output(self.right_in4, self.low_electrical_level) //将引脚状态设置为低电平，0关
         if self.right_enb > 0:
             GPIO.output(self.right_enb, self.hight_electrical_level)
     
     
     '''
-        左边轮子前进
-        '''
+    左边轮子前进
+    '''
     def lFoward(self):
         GPIO.output(self.left_in1, self.hight_electrical_level)
         GPIO.output(self.left_in2, self.low_electrical_level)
@@ -49,8 +49,8 @@ class Car():
             GPIO.output(self.left_ena, self.hight_electrical_level)
     
     '''
-        右边轮子后退
-        '''
+    右边轮子后退
+    '''
     def rBackward(self):
         GPIO.output(self.right_in3, self.low_electrical_level)
         GPIO.output(self.right_in4, self.hight_electrical_level)
@@ -58,8 +58,8 @@ class Car():
             GPIO.output(self.right_enb, self.hight_electrical_level)
     
     '''
-        左边边轮子后退
-        '''
+    左边轮子后退
+    '''
     def lBackward(self):
         GPIO.output(self.left_in1, self.low_electrical_level)
         GPIO.output(self.left_in2, self.hight_electrical_level)
@@ -68,7 +68,7 @@ class Car():
     
     '''
     左边轮子停止
-        '''
+    '''
     def lStop(self):
         if self.left_ena > 0:
             GPIO.output(self.left_ena, self.low_electrical_level)
@@ -77,8 +77,8 @@ class Car():
             GPIO.output(self.left_in1, self.low_electrical_level)
             
     '''
-        右边轮子停止
-        '''
+    右边轮子停止
+    '''
     def rStop(self):
         if self.right_enb > 0:
             GPIO.output(self.right_enb, self.low_electrical_level)
@@ -86,20 +86,22 @@ class Car():
             GPIO.output(self.right_in3, self.low_electrical_level)
             GPIO.output(self.right_in4, self.low_electrical_level)
     '''
-        小车前进
-        '''
+    小车前进
+    '''
     def moveForward(self):
         self.lFoward()
         self.rFoward()
     
-    '''小车后退
-        '''
+    '''
+    小车后退
+    '''
     def moveBackground(self):
         self.lBackward()
         self.rBackward()
     
-    '''小车右转
-        '''
+    '''
+    小车右转
+    '''
     def spinRight(self):
        self.rFoward()
        self.lBackward()
@@ -111,8 +113,8 @@ class Car():
         self.lFoward()
     
     '''
-        小车停止--左边及右边轮子都停止
-        '''
+    小车停止--左边及右边轮子都停止
+    '''
     def stop(self):
         self.lStop()
         self.rStop()
